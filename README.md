@@ -10,8 +10,20 @@ sync.sh                             同步与链接脚本
 skills/<owner>/<repo>/<skill>/      同步下来的 skill（不要手改，下次同步会被覆盖）
 skills/<owner>/<repo>/SOURCE        来源仓库和 commit
 skills/<owner>/<repo>/LICENSE       上游许可证
-skills/local/<skill>/               不来自任何仓库的 skill（脚本不会动它）
+skills/local/<skill>/               不来自任何仓库的 skill，随本仓库公开（脚本不会动它）
+skills/private/<skill>/             只在本机用的 skill（脚本不会动它）
 ```
+
+## 私有 skill
+
+`skills/private/` 被本仓库的 `.gitignore` 忽略，本身是一个独立的 Git 仓库，没有远端：
+
+```bash
+cd skills/private
+git add -A && git commit -m "..."   # 正常记录版本
+```
+
+它不会随本仓库推送。需要备份时，可以给它加一个 GitHub 私有仓库作为远端；不要加公开远端。`link` 会照常把它链接到 `~/.agents/skills`。
 
 ## 用法
 

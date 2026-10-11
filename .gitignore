@@ -1,3 +1,6 @@
 .DS_Store
 .env
 .claude/settings.local.json
+
+# 只在本机使用的 skill，不提交、不推送
+skills/private/

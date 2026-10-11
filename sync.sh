@@ -116,13 +116,13 @@ cmd_update() {
   done < <(read_sources)
   flush
 
-  # Drop groups no longer listed in sources.txt (full runs only; skills/local is never touched).
+  # Drop groups no longer listed in sources.txt (full runs only; skills/local and skills/private are never touched).
   if ((${#only[@]} == 0)) && [[ -d "$SKILLS" ]]; then
     local g rel w keep
     for g in "$SKILLS"/*/*/; do
       [[ -d "$g" ]] || continue
       rel="${g#"$SKILLS"/}"; rel="${rel%/}"
-      [[ "$rel" == local/* ]] && continue
+      [[ "$rel" == local/* || "$rel" == private/* ]] && continue
       keep=0; for w in "${wanted[@]}"; do [[ "$w" == "$rel" ]] && keep=1 && break; done
       ((keep)) || { log "✗ 移除 $rel（已不在 sources.txt）"; rm -rf "$g"; }
     done
@@ -147,7 +147,7 @@ cmd_update() {
 # List every skill dir: "name<TAB>path".
 collect_skills() {
   local f d
-  for f in "$SKILLS"/*/*/*/SKILL.md "$SKILLS"/local/*/SKILL.md; do
+  for f in "$SKILLS"/*/*/*/SKILL.md "$SKILLS"/local/*/SKILL.md "$SKILLS"/private/*/SKILL.md; do
     [[ -f "$f" ]] || continue
     d="$(dirname "$f")"
     printf '%s\t%s\n' "$(skill_name "$d")" "$d"
@@ -203,8 +203,12 @@ cmd_link() {
 cmd_list() {
   local name src commit
   while IFS=$'\t' read -r name src; do
-    commit="$(awk '/^commit:/ {print substr($2,1,7)}' "$(dirname "$src")/SOURCE" 2>/dev/null || true)"
-    printf '%-28s %-8s %s\n' "$name" "${commit:-local}" "${src#"$ROOT"/}"
+    case "$src" in
+      "$SKILLS"/private/*) commit=private ;;
+      "$SKILLS"/local/*) commit=local ;;
+      *) commit="$(awk '/^commit:/ {print substr($2,1,7)}' "$(dirname "$src")/SOURCE" 2>/dev/null || true)" ;;
+    esac
+    printf '%-28s %-8s %s\n' "$name" "$commit" "${src#"$ROOT"/}"
   done < <(collect_skills)
 }
 
