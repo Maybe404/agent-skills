@@ -1,0 +1,24 @@
+{
+  "sources": {
+    "designspells": {
+      "browserVerifiedCount": 340,
+      "browserVerifiedAt": "2026-10-07",
+      "browserNote": "Browser scrolling reached item 001 through item 340. CLI and sitemap requests returned 429; individual pages are inspiration references only.",
+      "catalogCount": 340,
+      "coverage": "bounded-browser"
+    },
+    "inspora": {
+      "browserObservedCount": 176,
+      "browserObservedAt": "2026-10-07",
+      "browserNote": "Homepage lazy-loading observed 176 post links after 25 scroll passes; sitemap advertised but command line request was blocked. Treat as partial until pagination/API is verified."
+    },
+    "collectui": {
+      "browserNote": "Homepage has search, categories, trending and dynamic latest designs. Static HTML does not enumerate posts; treat as inspiration-only and use site navigation/search on demand."
+    },
+    "getdesign": {
+      "browserPaidEffectsCount": 36,
+      "browserPaidEffectsAt": "2026-10-07",
+      "browserNote": "Animated Backgrounds page visibly lists 36 effects and a $49 purchase flow. User elected not to buy Pro; records remain excluded-paid."
+    }
+  }
+}

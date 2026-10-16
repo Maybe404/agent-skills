@@ -1,0 +1,372 @@
+{
+  "schemaVersion": 1,
+  "policy": {
+    "fetch": "on-demand",
+    "paid": "exclude",
+    "newSources": "explicit-user-request"
+  },
+  "sources": [
+    {
+      "id": "jakub",
+      "name": "Jakub Antalík",
+      "url": "https://jakubantalik.com/",
+      "originalUrl": "https://jakubantalik.com/",
+      "kind": "inspiration",
+      "access": "inspiration-only",
+      "coverage": "bounded",
+      "scope": "Homepage media showcase; linked external sites are separate sources",
+      "notes": [
+        "作品展示不是组件源码。使用图片或视频时核对原作者；不要凭视频声称获取了原始组件。"
+      ],
+      "endpoints": [
+        {
+          "type": "media",
+          "url": "https://jakubantalik.com/",
+          "seedFile": "jakub-home.html"
+        }
+      ]
+    },
+    {
+      "id": "shadcn",
+      "name": "shadcn/ui",
+      "url": "https://ui.shadcn.com/",
+      "originalUrl": "https://ui.shadcn.com/",
+      "kind": "component",
+      "access": "free",
+      "coverage": "bounded",
+      "scope": "Official registry plus all component/block/chart URLs in sitemap; provider variants are separate entries",
+      "notes": [
+        "按项目已有 Base UI、Radix 或 React Aria 体系选择；不要混用不兼容的 props。源码按官方 CLI 与当前 style 获取。"
+      ],
+      "endpoints": [
+        {
+          "type": "registry",
+          "url": "https://ui.shadcn.com/r/index.json",
+          "seedFile": "shadcn-registry.json",
+          "pageTemplate": "https://ui.shadcn.com/docs/components/{name}"
+        },
+        {
+          "type": "sitemap",
+          "url": "https://ui.shadcn.com/sitemap.xml",
+          "seedFile": "shadcn-sitemap.xml",
+          "include": "/docs/components/.+|/blocks/.+|/charts/.+"
+        }
+      ]
+    },
+    {
+      "id": "inspora",
+      "name": "Inspora",
+      "url": "https://www.inspora.design/",
+      "originalUrl": "https://www.inspora.design/",
+      "kind": "inspiration",
+      "access": "inspiration-only",
+      "coverage": "partial",
+      "scope": "Homepage posts; full pagination not yet verified",
+      "notes": [
+        "首页只有部分条目；sitemap 请求被安全验证拦截。不能声称全量。灵感条目可能没有源码或 prompt。"
+      ],
+      "endpoints": [
+        {
+          "type": "links",
+          "url": "https://www.inspora.design/",
+          "seedFile": "inspora-home.html",
+          "include": "https://www\\.inspora\\.design/posts/"
+        }
+      ]
+    },
+    {
+      "id": "obsidian",
+      "name": "ObsidianUI",
+      "url": "https://www.obsidianui.dev/",
+      "originalUrl": "https://www.obsidianui.dev/",
+      "kind": "component",
+      "access": "free",
+      "coverage": "bounded",
+      "scope": "All official registry items; templates tracked separately in source reference",
+      "notes": [
+        "registry 含辅助组件。获取每个 files[].content、依赖及 CSS，不要只复制一个 TSX。模板是独立来源，需读模板目录。",
+        "Project One 模板不在 registry 中；使用 references/sources.md 的模板链接，不遗漏独立模板。"
+      ],
+      "endpoints": [
+        {
+          "type": "registry",
+          "url": "https://www.obsidianui.dev/r/registry.json",
+          "seedFile": "obsidian-registry.json",
+          "pageTemplate": "https://www.obsidianui.dev/docs/{name}",
+          "itemTemplate": "https://www.obsidianui.dev/r/{name}.json"
+        }
+      ]
+    },
+    {
+      "id": "collectui",
+      "name": "Collect UI",
+      "url": "https://collectui.com/",
+      "originalUrl": "https://collectui.com/",
+      "kind": "inspiration",
+      "access": "inspiration-only",
+      "coverage": "partial",
+      "scope": "Dynamic inspiration feed; full enumeration unresolved",
+      "notes": [
+        "动态列表，当前 HTML 未给出可枚举条目。必须浏览器检索；未完成全量目录。不要把图片当可安装组件。"
+      ],
+      "endpoints": [
+        {
+          "type": "links",
+          "url": "https://collectui.com/",
+          "seedFile": "collectui-home.html",
+          "include": "https://collectui\\.com/(designs|posts|shots)/"
+        }
+      ]
+    },
+    {
+      "id": "designspells",
+      "name": "Design Spells",
+      "url": "https://designspells.com/",
+      "originalUrl": "https://designspells.com/",
+      "kind": "inspiration",
+      "access": "inspiration-only",
+      "coverage": "partial",
+      "scope": "Browser-visible inspiration feed; CLI blocked",
+      "notes": [
+        "命令行请求 429；浏览器首页可读，展示编号 340 起的列表。全量目录尚未验证。仅用于交互参考，不能声称拥有产品源码。"
+      ],
+      "endpoints": [
+        {
+          "type": "links",
+          "url": "https://designspells.com/",
+          "seedFile": "designspells-home.html",
+          "include": "https://designspells\\.com/spells/"
+        }
+      ]
+    },
+    {
+      "id": "origin",
+      "name": "OriginKit",
+      "url": "https://www.originkit.dev/",
+      "originalUrl": "https://www.originkit.dev/",
+      "kind": "component",
+      "access": "unknown",
+      "coverage": "bounded",
+      "scope": "Homepage published registry and template catalogue; sitemap cross-check required",
+      "notes": [
+        "paid=true 排除；缺少 paid 标记不等于免费，需要逐项核实。部分免费组件可能需要免费账户。"
+      ],
+      "endpoints": [
+        {
+          "type": "origin",
+          "url": "https://www.originkit.dev/",
+          "seedFile": "origin-home.html"
+        }
+      ]
+    },
+    {
+      "id": "bencho",
+      "name": "Bencho",
+      "url": "https://bencho.dev/",
+      "originalUrl": "https://bencho.dev/blocks/magnet-select",
+      "kind": "component",
+      "access": "free",
+      "coverage": "bounded",
+      "scope": "All Blocks listed in official llms.txt; Finds and Sounds separately indexed in sitemap supplement",
+      "notes": [
+        "MIT Blocks；多数提供 Copy source，文档不能替代源码。官方前端链接的 GitHub 仓库本次返回 404；通过组件页 Copy source 获取，不从演示压缩 bundle 反推完整代码。"
+      ],
+      "endpoints": [
+        {
+          "type": "markdown",
+          "url": "https://bencho.dev/llms.txt",
+          "seedFile": "bencho-llms.txt",
+          "include": "/blocks/",
+          "slugLast": true
+        },
+        {
+          "type": "sitemap",
+          "url": "https://bencho.dev/sitemap.xml",
+          "seedFile": "bencho-sitemap.xml",
+          "include": "/finds/.+",
+          "kind": "inspiration",
+          "access": "inspiration-only"
+        }
+      ]
+    },
+    {
+      "id": "beautiful",
+      "name": "Beautiful UI",
+      "url": "https://www.beautifului.dev/",
+      "originalUrl": "https://www.beautifului.dev/#thinking-state",
+      "kind": "component",
+      "access": "free",
+      "coverage": "bounded",
+      "scope": "All public registry items plus homepage sections",
+      "notes": [
+        "MIT 页面 https://www.beautifului.dev/license。通过组件的复制控件获取完整实现；不要把示例 CRM 数据当项目真实数据。",
+        "已确认公开 registry；先取 foundation，组件 demo 可能是定时模拟，接入时改为真实业务事件。"
+      ],
+      "endpoints": [
+        {
+          "type": "registry",
+          "url": "https://www.beautifului.dev/r/registry.json",
+          "seedFile": "beautiful-registry.json",
+          "itemTemplate": "https://www.beautifului.dev/r/{name}.json",
+          "pageTemplate": "https://www.beautifului.dev/#{name}"
+        },
+        {
+          "type": "anchors",
+          "url": "https://www.beautifului.dev/",
+          "seedFile": "beautiful-home.html",
+          "include": ".+"
+        }
+      ]
+    },
+    {
+      "id": "libraries",
+      "name": "Libraries.dev",
+      "url": "https://libraries.dev/",
+      "originalUrl": "https://libraries.dev/orbs",
+      "kind": "effect",
+      "access": "free",
+      "coverage": "bounded",
+      "scope": "Seven homepage library detail pages; Pro Studio excluded",
+      "notes": [
+        "使用详情页原始 prompt（安装、用法、参数）。仅免费选项；禁止安装 Pro skill 或调用 Pro Studio。首页 FAQ 仍写五个库，但目录已有七个，以目录与详情页为准。"
+      ],
+      "endpoints": [
+        {
+          "type": "links",
+          "url": "https://libraries.dev/",
+          "seedFile": "libraries-home.html",
+          "include": "https://libraries\\.dev/(beam|orbs|gooey|voice|bots|metal|image)\\.html$"
+        }
+      ]
+    },
+    {
+      "id": "loading",
+      "name": "Loading UI",
+      "url": "https://www.loading-ui.com/",
+      "originalUrl": "https://www.loading-ui.com/",
+      "kind": "component",
+      "access": "free",
+      "coverage": "bounded",
+      "scope": "All components in official llms index; sitemap cross-check",
+      "notes": [
+        "需要 React、Tailwind 与适配的 aliases。实际加载状态驱动，不能用固定计时假装请求完成。"
+      ],
+      "endpoints": [
+        {
+          "type": "registry",
+          "url": "https://loading-ui.com/r/registry.json",
+          "seedFile": "loading-registry.json",
+          "itemTemplate": "https://loading-ui.com/r/{name}.json",
+          "pageTemplate": "https://www.loading-ui.com/docs/components/{name}"
+        },
+        {
+          "type": "markdown",
+          "url": "https://www.loading-ui.com/llms.txt",
+          "seedFile": "loading-llms.txt",
+          "include": "/docs/components/.+",
+          "slugLast": true,
+          "itemTemplate": "https://loading-ui.com/r/{name}.json"
+        }
+      ]
+    },
+    {
+      "id": "reactbits",
+      "name": "React Bits",
+      "url": "https://reactbits.dev/",
+      "originalUrl": "https://reactbits.dev/",
+      "kind": "component",
+      "access": "free",
+      "coverage": "bounded",
+      "scope": "All free registry variants; separate paid React Bits Pro excluded",
+      "notes": [
+        "JS/TS × CSS/Tailwind 四种变体均保留；按项目选择一种，不重复安装。每项依赖不同，先核对 GSAP、Motion、Three、OGL 及 SSR。"
+      ],
+      "endpoints": [
+        {
+          "type": "registry",
+          "url": "https://reactbits.dev/r/registry.json",
+          "seedFile": "reactbits-registry.json",
+          "itemTemplate": "https://reactbits.dev/r/{name}"
+        },
+        {
+          "type": "reactbits-docs",
+          "url": "https://reactbits.dev/llms.txt",
+          "seedFile": "reactbits-llms.txt"
+        }
+      ]
+    },
+    {
+      "id": "getdesign",
+      "name": "getdesign.md",
+      "url": "https://getdesign.md/",
+      "originalUrl": "https://getdesign.md/backgrounds?fx=shutter-fade",
+      "kind": "design-reference",
+      "access": "unknown",
+      "coverage": "partial",
+      "scope": "Public design-md catalogue; paid backgrounds excluded; background effect enumeration pending",
+      "notes": [
+        "用户不购买 Pro。Animated Backgrounds 是付费包，27 个效果均不获取源码。公共 design-md 内容需按具体条目检查授权及可下载性。"
+      ],
+      "endpoints": [
+        {
+          "type": "sitemap",
+          "url": "https://getdesign.md/sitemap.xml",
+          "seedFile": "getdesign-sitemap.xml",
+          "include": "/design-md/.+|/backgrounds|/video-template"
+        }
+      ]
+    },
+    {
+      "id": "lucide",
+      "name": "Lucide",
+      "url": "https://lucide.dev/",
+      "originalUrl": "https://lucide.dev/",
+      "kind": "icon",
+      "access": "free",
+      "coverage": "bounded",
+      "scope": "All icon URLs in official sitemap",
+      "notes": [
+        "按项目框架安装对应包，只导入使用的图标。图标不自动提供可访问名称，装饰图标与图标按钮区别处理。"
+      ],
+      "endpoints": [
+        {
+          "type": "sitemap",
+          "url": "https://lucide.dev/sitemap.xml",
+          "seedFile": "lucide-sitemap.xml",
+          "include": "/icons/.+"
+        }
+      ]
+    },
+    {
+      "id": "uiarc",
+      "name": "UI Arc",
+      "url": "https://uiarc.dev/",
+      "originalUrl": "https://uiarc.dev/components/in-view-title",
+      "kind": "component",
+      "access": "unknown",
+      "coverage": "bounded",
+      "scope": "Free registry plus all documented components/blocks including excluded Pro records",
+      "notes": [
+        "只用免费 registry。免费源码无需配置带认证的 MCP；foundation.css 全局导入一次。Arc 使用 CSS modules/variables，别默认当 Tailwind 组件。"
+      ],
+      "endpoints": [
+        {
+          "type": "registry",
+          "url": "https://uiarc.dev/r/registry.json",
+          "seedFile": "uiarc-registry.json",
+          "access": "free",
+          "itemTemplate": "https://uiarc.dev/r/{name}.json"
+        },
+        {
+          "type": "markdown",
+          "url": "https://uiarc.dev/llms.txt",
+          "seedFile": "uiarc-llms.txt",
+          "include": "/components/.+/markdown",
+          "slugLast": true,
+          "access": "free",
+          "itemTemplate": "https://uiarc.dev/r/{name}.json"
+        }
+      ]
+    }
+  ]
+}

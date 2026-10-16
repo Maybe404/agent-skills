@@ -1,0 +1,92 @@
+{
+  "加载": [
+    "loading",
+    "loader",
+    "spinner",
+    "skeleton"
+  ],
+  "骨架": [
+    "skeleton"
+  ],
+  "思考": [
+    "thinking",
+    "orb",
+    "shimmer"
+  ],
+  "按钮": [
+    "button",
+    "confirm"
+  ],
+  "磁吸": [
+    "magnet",
+    "magnetic"
+  ],
+  "选择": [
+    "select",
+    "picker",
+    "combobox"
+  ],
+  "弹窗": [
+    "dialog",
+    "modal",
+    "sheet"
+  ],
+  "导航": [
+    "navigation",
+    "sidebar",
+    "tabs",
+    "menu"
+  ],
+  "文字": [
+    "text",
+    "title",
+    "heading"
+  ],
+  "标题": [
+    "heading",
+    "title"
+  ],
+  "滚动": [
+    "scroll",
+    "in-view"
+  ],
+  "背景": [
+    "background",
+    "gradient"
+  ],
+  "图标": [
+    "icon"
+  ],
+  "表格": [
+    "table",
+    "grid"
+  ],
+  "表单": [
+    "form",
+    "input"
+  ],
+  "聊天": [
+    "chat",
+    "composer",
+    "prompt"
+  ],
+  "动效": [
+    "animation",
+    "motion",
+    "transition"
+  ],
+  "卡片": [
+    "card"
+  ],
+  "上传": [
+    "upload",
+    "dropzone"
+  ],
+  "图表": [
+    "chart",
+    "graph"
+  ],
+  "模板": [
+    "template"
+  ]
+}

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Curated UI"
+  short_description: "Use curated UI libraries before inventing UI"
+  brand_color: "#7C5CFC"
+  default_prompt: "Use $curated-ui to choose mature components for this frontend task before writing new UI."
+policy:
+  allow_implicit_invocation: true

@@ -74,6 +74,10 @@ commit = '13e4063a1cf913f5606d57d42ab83a86f5001e04'
 hash = 'b146008599c31057'
 
 [links]
+[links.'agents/curated-ui']
+mode = 'link'
+source = 'skills/curated-ui'
+
 [links.'agents/defuddle']
 mode = 'link'
 source = 'vendor/kepano/obsidian-skills/defuddle'
@@ -142,6 +146,10 @@ source = 'vendor/Maybe404/ui-arsenal/ui-arsenal'
 mode = 'link'
 source = 'vendor/vercel-labs/agent-skills/vercel-react-best-practices'
 
+[links.'claude/curated-ui']
+mode = 'link'
+source = 'skills/curated-ui'
+
 [links.'claude/defuddle']
 mode = 'link'
 source = 'vendor/kepano/obsidian-skills/defuddle'
@@ -209,3 +217,47 @@ source = 'vendor/Maybe404/ui-arsenal/ui-arsenal'
 [links.'claude/vercel-react-best-practices']
 mode = 'link'
 source = 'vendor/vercel-labs/agent-skills/vercel-react-best-practices'
+
+[links.'codex/curated-ui']
+mode = 'link'
+source = 'skills/curated-ui'
+
+[links.'codex/differential-review']
+mode = 'link'
+source = 'vendor/trailofbits/skills/differential-review'
+
+[links.'codex/idea-config-maintainer']
+mode = 'link'
+source = 'private/idea-config-maintainer'
+
+[links.'codex/impeccable']
+mode = 'link'
+source = 'vendor/pbakaus/impeccable/impeccable'
+
+[links.'codex/modern-python']
+mode = 'link'
+source = 'vendor/trailofbits/skills/modern-python'
+
+[links.'codex/ui-arsenal']
+mode = 'link'
+source = 'vendor/Maybe404/ui-arsenal/ui-arsenal'
+
+[links.'codex/vercel-react-best-practices']
+mode = 'link'
+source = 'vendor/vercel-labs/agent-skills/vercel-react-best-practices'
+
+[links.'gemini/differential-review']
+mode = 'link'
+source = 'vendor/trailofbits/skills/differential-review'
+
+[links.'gemini/impeccable']
+mode = 'link'
+source = 'vendor/pbakaus/impeccable/impeccable'
+
+[links.'gemini/modern-python']
+mode = 'link'
+source = 'vendor/trailofbits/skills/modern-python'
+
+[links.'grok/orchestration']
+mode = 'link'
+source = 'vendor/stablyai/orca/orchestration'

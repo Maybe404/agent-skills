@@ -12,6 +12,10 @@ use = ['skilldots']
 repo = 'Maybe404/ui-arsenal'
 use = ['*']
 
+[pack.skill]
+[pack.skill.ui-arsenal]
+targets = ['agents', 'claude', 'codex']
+
 [[pack]]
 repo = 'kepano/obsidian-skills'
 use = ['defuddle', 'json-canvas', 'obsidian-bases', 'obsidian-cli', 'obsidian-markdown']
@@ -20,17 +24,36 @@ use = ['defuddle', 'json-canvas', 'obsidian-bases', 'obsidian-cli', 'obsidian-ma
 repo = 'pbakaus/impeccable'
 use = ['*']
 
+[pack.skill]
+[pack.skill.impeccable]
+targets = ['agents', 'claude', 'gemini', 'codex']
+
 [[pack]]
 repo = 'stablyai/orca'
 use = ['orchestration']
+
+[pack.skill]
+[pack.skill.orchestration]
+targets = ['agents', 'claude', 'grok']
 
 [[pack]]
 repo = 'trailofbits/skills'
 use = ['differential-review', 'modern-python']
 
+[pack.skill]
+[pack.skill.differential-review]
+targets = ['agents', 'claude', 'gemini', 'codex']
+
+[pack.skill.modern-python]
+targets = ['agents', 'claude', 'gemini', 'codex']
+
 [[pack]]
 repo = 'vercel-labs/agent-skills'
 use = ['vercel-react-best-practices']
+
+[pack.skill]
+[pack.skill.vercel-react-best-practices]
+targets = ['agents', 'claude', 'codex']
 
 [[pack]]
 repo = 'vercel-labs/skills'
@@ -39,3 +62,11 @@ use = ['find-skills']
 [[app]]
 name = 'surge'
 path = '/Applications/Surge.app/Contents/Resources/Skills/surge'
+
+[[local]]
+name = 'curated-ui'
+targets = ['agents', 'claude', 'codex']
+
+[[local]]
+name = 'idea-config-maintainer'
+targets = ['agents', 'claude', 'codex']
