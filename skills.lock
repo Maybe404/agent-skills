@@ -67,6 +67,54 @@ commit = '13e4063a1cf913f5606d57d42ab83a86f5001e04'
 hash = 'b146008599c31057'
 
 [links]
+[links.'agents/defuddle']
+mode = 'link'
+source = 'vendor/kepano/obsidian-skills/defuddle'
+
+[links.'agents/differential-review']
+mode = 'link'
+source = 'vendor/trailofbits/skills/differential-review'
+
+[links.'agents/find-skills']
+mode = 'link'
+source = 'vendor/vercel-labs/skills/find-skills'
+
+[links.'agents/html-document']
+mode = 'link'
+source = 'private/html-document'
+
+[links.'agents/idea-config-maintainer']
+mode = 'link'
+source = 'private/idea-config-maintainer'
+
+[links.'agents/impeccable']
+mode = 'link'
+source = 'vendor/pbakaus/impeccable/impeccable'
+
+[links.'agents/json-canvas']
+mode = 'link'
+source = 'vendor/kepano/obsidian-skills/json-canvas'
+
+[links.'agents/modern-python']
+mode = 'link'
+source = 'vendor/trailofbits/skills/modern-python'
+
+[links.'agents/obsidian-bases']
+mode = 'link'
+source = 'vendor/kepano/obsidian-skills/obsidian-bases'
+
+[links.'agents/obsidian-cli']
+mode = 'link'
+source = 'vendor/kepano/obsidian-skills/obsidian-cli'
+
+[links.'agents/obsidian-markdown']
+mode = 'link'
+source = 'vendor/kepano/obsidian-skills/obsidian-markdown'
+
+[links.'agents/orchestration']
+mode = 'link'
+source = 'vendor/stablyai/orca/orchestration'
+
 [links.'agents/subagent']
 mode = 'link'
 source = 'skills/subagent'
@@ -74,3 +122,75 @@ source = 'skills/subagent'
 [links.'agents/surge']
 mode = 'link'
 source = '/Applications/Surge.app/Contents/Resources/Skills/surge'
+
+[links.'agents/ui-arsenal']
+mode = 'link'
+source = 'vendor/Maybe404/ui-arsenal/ui-arsenal'
+
+[links.'agents/vercel-react-best-practices']
+mode = 'link'
+source = 'vendor/vercel-labs/agent-skills/vercel-react-best-practices'
+
+[links.'claude/defuddle']
+mode = 'link'
+source = 'vendor/kepano/obsidian-skills/defuddle'
+
+[links.'claude/differential-review']
+mode = 'link'
+source = 'vendor/trailofbits/skills/differential-review'
+
+[links.'claude/find-skills']
+mode = 'link'
+source = 'vendor/vercel-labs/skills/find-skills'
+
+[links.'claude/html-document']
+mode = 'link'
+source = 'private/html-document'
+
+[links.'claude/idea-config-maintainer']
+mode = 'link'
+source = 'private/idea-config-maintainer'
+
+[links.'claude/impeccable']
+mode = 'link'
+source = 'vendor/pbakaus/impeccable/impeccable'
+
+[links.'claude/json-canvas']
+mode = 'link'
+source = 'vendor/kepano/obsidian-skills/json-canvas'
+
+[links.'claude/modern-python']
+mode = 'link'
+source = 'vendor/trailofbits/skills/modern-python'
+
+[links.'claude/obsidian-bases']
+mode = 'link'
+source = 'vendor/kepano/obsidian-skills/obsidian-bases'
+
+[links.'claude/obsidian-cli']
+mode = 'link'
+source = 'vendor/kepano/obsidian-skills/obsidian-cli'
+
+[links.'claude/obsidian-markdown']
+mode = 'link'
+source = 'vendor/kepano/obsidian-skills/obsidian-markdown'
+
+[links.'claude/orchestration']
+mode = 'link'
+source = 'vendor/stablyai/orca/orchestration'
+
+[links.'claude/subagent']
+mode = 'link'
+source = 'skills/subagent'
+
+[links.'claude/surge']
+mode = 'link'
+source = '/Applications/Surge.app/Contents/Resources/Skills/surge'
+
+[links.'claude/ui-arsenal']
+mode = 'link'
+source = 'vendor/Maybe404/ui-arsenal/ui-arsenal'
+
+[links.'claude/vercel-react-best-practices']
+mode = 'link'
+source = 'vendor/vercel-labs/agent-skills/vercel-react-best-practices'

@@ -2,7 +2,7 @@
 # Docs: https://github.com/Maybe404/skilldots
 
 [targets]
-default = ['agents']
+default = ['agents', 'claude']
 
 [[pack]]
 repo = 'Maybe404/ui-arsenal'
