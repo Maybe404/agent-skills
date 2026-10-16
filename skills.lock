@@ -1,0 +1,76 @@
+# Written by skilldots. Do not edit.
+version = 1
+
+[packs]
+[packs.'Maybe404/ui-arsenal']
+commit = '830a9fb1d4692ac25820629de70098dafcc60b14'
+
+[packs.'Maybe404/ui-arsenal'.skills]
+[packs.'Maybe404/ui-arsenal'.skills.ui-arsenal]
+hash = '9e7aa891ce2f7cec'
+
+[packs.'kepano/obsidian-skills']
+commit = '3ccff5338ea700537839b21900aa5358a0402c98'
+
+[packs.'kepano/obsidian-skills'.skills]
+[packs.'kepano/obsidian-skills'.skills.defuddle]
+hash = '3d52ffc7f4e446cf'
+
+[packs.'kepano/obsidian-skills'.skills.json-canvas]
+hash = '88737ed26c148542'
+
+[packs.'kepano/obsidian-skills'.skills.obsidian-bases]
+hash = '961677a303532498'
+
+[packs.'kepano/obsidian-skills'.skills.obsidian-cli]
+hash = '58fec9d58ebc0c4d'
+
+[packs.'kepano/obsidian-skills'.skills.obsidian-markdown]
+hash = 'dd1f743ff755f0b4'
+
+[packs.'pbakaus/impeccable']
+commit = '5bf0a069dc857e1b5f4b090e004d9d5b231416ca'
+
+[packs.'pbakaus/impeccable'.skills]
+[packs.'pbakaus/impeccable'.skills.impeccable]
+hash = 'bbabbe412ea172cb'
+
+[packs.'stablyai/orca']
+commit = 'a49295f0240353a4e56a292961a846b4d1eb24e0'
+
+[packs.'stablyai/orca'.skills]
+[packs.'stablyai/orca'.skills.orchestration]
+hash = '6e15b4ea69497f6b'
+
+[packs.'trailofbits/skills']
+commit = '5c99c03fb8a9ea568432ecbcba5d86e9f4ac2bf0'
+
+[packs.'trailofbits/skills'.skills]
+[packs.'trailofbits/skills'.skills.differential-review]
+hash = '965e48b69aad8c4e'
+
+[packs.'trailofbits/skills'.skills.modern-python]
+hash = '7288a34e65b207eb'
+
+[packs.'vercel-labs/agent-skills']
+commit = '063bee94c3f4df8453406c830b0a7df0f2860278'
+
+[packs.'vercel-labs/agent-skills'.skills]
+[packs.'vercel-labs/agent-skills'.skills.vercel-react-best-practices]
+hash = 'e3f2294574b469c7'
+
+[packs.'vercel-labs/skills']
+commit = '13e4063a1cf913f5606d57d42ab83a86f5001e04'
+
+[packs.'vercel-labs/skills'.skills]
+[packs.'vercel-labs/skills'.skills.find-skills]
+hash = 'b146008599c31057'
+
+[links]
+[links.'agents/subagent']
+mode = 'link'
+source = 'skills/subagent'
+
+[links.'agents/surge']
+mode = 'link'
+source = '/Applications/Surge.app/Contents/Resources/Skills/surge'

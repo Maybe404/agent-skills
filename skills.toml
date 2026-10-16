@@ -1,0 +1,37 @@
+# skilldots manifest — edit by hand or with `skd`.
+# Docs: https://github.com/Maybe404/skilldots
+
+[targets]
+default = ['agents']
+
+[[pack]]
+repo = 'Maybe404/ui-arsenal'
+use = ['*']
+
+[[pack]]
+repo = 'kepano/obsidian-skills'
+use = ['defuddle', 'json-canvas', 'obsidian-bases', 'obsidian-cli', 'obsidian-markdown']
+
+[[pack]]
+repo = 'pbakaus/impeccable'
+use = ['*']
+
+[[pack]]
+repo = 'stablyai/orca'
+use = ['orchestration']
+
+[[pack]]
+repo = 'trailofbits/skills'
+use = ['differential-review', 'modern-python']
+
+[[pack]]
+repo = 'vercel-labs/agent-skills'
+use = ['vercel-react-best-practices']
+
+[[pack]]
+repo = 'vercel-labs/skills'
+use = ['find-skills']
+
+[[app]]
+name = 'surge'
+path = '/Applications/Surge.app/Contents/Resources/Skills/surge'
