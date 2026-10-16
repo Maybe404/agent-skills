@@ -2,6 +2,13 @@
 version = 1
 
 [packs]
+[packs.'Maybe404/skilldots']
+commit = '9cb26a215dcc56af545b91c0fbae46d4b5e39fc2'
+
+[packs.'Maybe404/skilldots'.skills]
+[packs.'Maybe404/skilldots'.skills.skilldots]
+hash = '0d43810f26478db3'
+
 [packs.'Maybe404/ui-arsenal']
 commit = '830a9fb1d4692ac25820629de70098dafcc60b14'
 
@@ -115,6 +122,10 @@ source = 'vendor/kepano/obsidian-skills/obsidian-markdown'
 mode = 'link'
 source = 'vendor/stablyai/orca/orchestration'
 
+[links.'agents/skilldots']
+mode = 'link'
+source = 'vendor/Maybe404/skilldots/skilldots'
+
 [links.'agents/subagent']
 mode = 'link'
 source = 'skills/subagent'
@@ -178,6 +189,10 @@ source = 'vendor/kepano/obsidian-skills/obsidian-markdown'
 [links.'claude/orchestration']
 mode = 'link'
 source = 'vendor/stablyai/orca/orchestration'
+
+[links.'claude/skilldots']
+mode = 'link'
+source = 'vendor/Maybe404/skilldots/skilldots'
 
 [links.'claude/subagent']
 mode = 'link'

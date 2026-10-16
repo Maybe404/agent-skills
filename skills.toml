@@ -5,6 +5,10 @@
 default = ['agents', 'claude']
 
 [[pack]]
+repo = 'Maybe404/skilldots'
+use = ['skilldots']
+
+[[pack]]
 repo = 'Maybe404/ui-arsenal'
 use = ['*']
 
