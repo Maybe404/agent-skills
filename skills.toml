@@ -7,6 +7,7 @@ default = ['agents', 'claude']
 [[pack]]
 repo = 'Maybe404/skilldots'
 use = ['skilldots']
+targets = ['agents', 'claude']
 
 [[pack]]
 repo = 'Maybe404/ui-arsenal'
@@ -19,6 +20,11 @@ targets = ['agents', 'claude', 'codex']
 [[pack]]
 repo = 'kepano/obsidian-skills'
 use = ['defuddle', 'json-canvas', 'obsidian-bases', 'obsidian-cli', 'obsidian-markdown']
+
+[[pack]]
+repo = 'larksuite/cli'
+ref = 'v1.0.97'
+use = ['lark-shared', 'lark-doc', 'lark-wiki', 'lark-drive', 'lark-markdown', 'lark-whiteboard']
 
 [[pack]]
 repo = 'pbakaus/impeccable'
@@ -68,5 +74,13 @@ name = 'curated-ui'
 targets = ['agents', 'claude', 'codex']
 
 [[local]]
+name = 'html-document'
+targets = ['agents', 'claude']
+
+[[local]]
 name = 'idea-config-maintainer'
 targets = ['agents', 'claude', 'codex']
+
+[[local]]
+name = 'test'
+targets = []

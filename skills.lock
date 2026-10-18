@@ -35,6 +35,30 @@ hash = '58fec9d58ebc0c4d'
 [packs.'kepano/obsidian-skills'.skills.obsidian-markdown]
 hash = 'dd1f743ff755f0b4'
 
+[packs.'larksuite/cli']
+commit = '72579c80027c863ca51d5f9affda72a70ab0d8a6'
+ref = 'v1.0.97'
+upstream = ['lark-approval', 'lark-apps', 'lark-attendance', 'lark-base', 'lark-calendar', 'lark-contact', 'lark-doc', 'lark-drive', 'lark-event', 'lark-im', 'lark-mail', 'lark-markdown', 'lark-meeting', 'lark-minutes', 'lark-note', 'lark-okr', 'lark-openapi-explorer', 'lark-shared', 'lark-sheets', 'lark-skill-maker', 'lark-slides', 'lark-suite', 'lark-task', 'lark-vc', 'lark-vc-agent', 'lark-whiteboard', 'lark-wiki', 'lark-workflow-meeting-summary', 'lark-workflow-standup-report']
+
+[packs.'larksuite/cli'.skills]
+[packs.'larksuite/cli'.skills.lark-doc]
+hash = '59bbe080ea02a1a1'
+
+[packs.'larksuite/cli'.skills.lark-drive]
+hash = '156c7edb23235505'
+
+[packs.'larksuite/cli'.skills.lark-markdown]
+hash = 'a915d63d8e3172eb'
+
+[packs.'larksuite/cli'.skills.lark-shared]
+hash = 'd881dd0e17903b57'
+
+[packs.'larksuite/cli'.skills.lark-whiteboard]
+hash = '0f67128d20e972d8'
+
+[packs.'larksuite/cli'.skills.lark-wiki]
+hash = '42b33625cba4cc29'
+
 [packs.'pbakaus/impeccable']
 commit = '5bf0a069dc857e1b5f4b090e004d9d5b231416ca'
 
@@ -74,6 +98,11 @@ commit = '13e4063a1cf913f5606d57d42ab83a86f5001e04'
 hash = 'b146008599c31057'
 
 [links]
+[links.'agents/conductor']
+mode = 'link'
+source = 'skills/conductor'
+path = '/Users/maybe/.agents/skills/conductor'
+
 [links.'agents/curated-ui']
 mode = 'link'
 source = 'skills/curated-ui'
@@ -105,6 +134,36 @@ source = 'vendor/pbakaus/impeccable/impeccable'
 [links.'agents/json-canvas']
 mode = 'link'
 source = 'vendor/kepano/obsidian-skills/json-canvas'
+
+[links.'agents/lark-doc']
+mode = 'link'
+source = 'vendor/larksuite/cli/lark-doc'
+path = '/Users/maybe/.agents/skills/lark-doc'
+
+[links.'agents/lark-drive']
+mode = 'link'
+source = 'vendor/larksuite/cli/lark-drive'
+path = '/Users/maybe/.agents/skills/lark-drive'
+
+[links.'agents/lark-markdown']
+mode = 'link'
+source = 'vendor/larksuite/cli/lark-markdown'
+path = '/Users/maybe/.agents/skills/lark-markdown'
+
+[links.'agents/lark-shared']
+mode = 'link'
+source = 'vendor/larksuite/cli/lark-shared'
+path = '/Users/maybe/.agents/skills/lark-shared'
+
+[links.'agents/lark-whiteboard']
+mode = 'link'
+source = 'vendor/larksuite/cli/lark-whiteboard'
+path = '/Users/maybe/.agents/skills/lark-whiteboard'
+
+[links.'agents/lark-wiki']
+mode = 'link'
+source = 'vendor/larksuite/cli/lark-wiki'
+path = '/Users/maybe/.agents/skills/lark-wiki'
 
 [links.'agents/modern-python']
 mode = 'link'
@@ -146,6 +205,11 @@ source = 'vendor/Maybe404/ui-arsenal/ui-arsenal'
 mode = 'link'
 source = 'vendor/vercel-labs/agent-skills/vercel-react-best-practices'
 
+[links.'claude/conductor']
+mode = 'link'
+source = 'skills/conductor'
+path = '/Users/maybe/.claude/skills/conductor'
+
 [links.'claude/curated-ui']
 mode = 'link'
 source = 'skills/curated-ui'
@@ -178,6 +242,36 @@ source = 'vendor/pbakaus/impeccable/impeccable'
 mode = 'link'
 source = 'vendor/kepano/obsidian-skills/json-canvas'
 
+[links.'claude/lark-doc']
+mode = 'link'
+source = 'vendor/larksuite/cli/lark-doc'
+path = '/Users/maybe/.claude/skills/lark-doc'
+
+[links.'claude/lark-drive']
+mode = 'link'
+source = 'vendor/larksuite/cli/lark-drive'
+path = '/Users/maybe/.claude/skills/lark-drive'
+
+[links.'claude/lark-markdown']
+mode = 'link'
+source = 'vendor/larksuite/cli/lark-markdown'
+path = '/Users/maybe/.claude/skills/lark-markdown'
+
+[links.'claude/lark-shared']
+mode = 'link'
+source = 'vendor/larksuite/cli/lark-shared'
+path = '/Users/maybe/.claude/skills/lark-shared'
+
+[links.'claude/lark-whiteboard']
+mode = 'link'
+source = 'vendor/larksuite/cli/lark-whiteboard'
+path = '/Users/maybe/.claude/skills/lark-whiteboard'
+
+[links.'claude/lark-wiki']
+mode = 'link'
+source = 'vendor/larksuite/cli/lark-wiki'
+path = '/Users/maybe/.claude/skills/lark-wiki'
+
 [links.'claude/modern-python']
 mode = 'link'
 source = 'vendor/trailofbits/skills/modern-python'
@@ -201,6 +295,7 @@ source = 'vendor/stablyai/orca/orchestration'
 [links.'claude/skilldots']
 mode = 'link'
 source = 'vendor/Maybe404/skilldots/skilldots'
+path = '/Users/maybe/.claude/skills/skilldots'
 
 [links.'claude/subagent']
 mode = 'link'

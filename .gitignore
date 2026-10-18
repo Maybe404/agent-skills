@@ -1,3 +1,5 @@
 .DS_Store
 # Machine-local skills: a separate git repository that is never pushed with this one.
 /private/
+# Where skd parks anything it takes out of the way. Empty with: skd trash empty
+/.trash/

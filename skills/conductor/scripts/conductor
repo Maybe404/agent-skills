@@ -1,0 +1,403 @@
+#!/bin/sh
+# conductor: local task tracker for the conductor skill.
+# Plain files under .conductor/, POSIX sh + coreutils only (no python, no jq).
+set -eu
+
+STATUSES="open in-progress review blocked needs-user done closed"
+RISKS="low mid high"
+
+usage() {
+	cat <<'EOF'
+Usage: conductor <command> [args]
+
+  init                          Create .conductor/ at the repo root (or cwd) and hide it from git
+  config [get KEY | set KEY VALUE]
+  new -t TITLE [-r low|mid|high] [-l LABEL]... (-m TEXT | -f FILE | -f -)
+  list [--all] [--status S]     One line per task; done/closed hidden unless --all
+  show ID [--last N | --all]    Meta, body and the last N comments (default 5)
+  comment ID (-m TEXT | -f FILE | -f -) [--as AUTHOR] [--verbatim --posted-by WHO]
+  status ID STATUS [--as AUTHOR]   open in-progress review blocked needs-user done closed
+  risk ID low|mid|high [--as AUTHOR]
+  label ID +NAME|-NAME... [--as AUTHOR]
+  link ID KEY VALUE [--as AUTHOR]  e.g. link 7 branch feat/x; link 7 commit abc123
+  body ID (-m TEXT | -f FILE | -f -) [--as AUTHOR]   Replace the body; old one kept in history/
+  rundir ID                     Print (and create) the directory for briefs and logs of a task
+
+AUTHOR defaults to $CONDUCTOR_AUTHOR, then "unknown".
+The .conductor/ directory is found by walking up from cwd, or set CONDUCTOR_DIR to it.
+EOF
+}
+
+die() { printf 'conductor: %s\n' "$*" >&2; exit 1; }
+now() { date -u +%Y-%m-%dT%H:%M:%SZ; }
+stamp() { date -u +%Y%m%dT%H%M%SZ; }
+
+find_root() {
+	if [ -n "${CONDUCTOR_DIR:-}" ]; then
+		[ -d "$CONDUCTOR_DIR" ] || die "CONDUCTOR_DIR does not exist: $CONDUCTOR_DIR"
+		printf '%s\n' "$CONDUCTOR_DIR"
+		return 0
+	fi
+	d=$(pwd)
+	while :; do
+		if [ -d "$d/.conductor" ]; then
+			printf '%s\n' "$d/.conductor"
+			return 0
+		fi
+		[ "$d" = / ] && break
+		d=$(dirname "$d")
+	done
+	die "no .conductor/ found; run 'conductor init' first"
+}
+
+# --- key: value files ---------------------------------------------------------
+
+kv_get() { # file key
+	[ -f "$1" ] || return 0
+	K=$2 awk 'BEGIN { k = ENVIRON["K"] } index($0, k ": ") == 1 { print substr($0, length(k) + 3); exit }' "$1"
+}
+
+kv_set() { # file key value
+	v=$(printf '%s' "$3" | tr '\n\r' '  ')
+	tmp="$1.tmp.$$"
+	if [ -f "$1" ]; then
+		K=$2 V=$v awk '
+			BEGIN { k = ENVIRON["K"]; v = ENVIRON["V"] }
+			index($0, k ": ") == 1 { if (!done) print k ": " v; done = 1; next }
+			{ print }
+			END { if (!done) print k ": " v }' "$1" >"$tmp"
+	else
+		printf '%s: %s\n' "$2" "$v" >"$tmp"
+	fi
+	mv "$tmp" "$1"
+}
+
+in_list() { # word list
+	for w in $2; do [ "$w" = "$1" ] && return 0; done
+	return 1
+}
+
+# --- issues -------------------------------------------------------------------
+
+norm_id() {
+	raw=$(printf '%s' "$1" | tr -d '#')
+	case "$raw" in '' | *[!0-9]*) die "bad task id: $1" ;; esac
+	awk -v n="$raw" 'BEGIN { printf "%04d", n }'
+}
+
+issue_dir() { # root id -> dir (must exist)
+	id=$(norm_id "$2")
+	[ -d "$1/issues/$id" ] || die "no such task: #$id"
+	printf '%s\n' "$1/issues/$id"
+}
+
+read_text() { # mode value -> stdout
+	case "$1" in
+	m) printf '%s\n' "$2" ;;
+	f)
+		if [ "$2" = - ]; then cat; else
+			[ -f "$2" ] || die "no such file: $2"
+			cat "$2"
+		fi
+		;;
+	*) die "need -m TEXT or -f FILE (use -f - for stdin)" ;;
+	esac
+}
+
+author() { printf '%s' "${AS:-${CONDUCTOR_AUTHOR:-unknown}}"; }
+
+add_comment() { # dir kind text-file [posted_by]
+	cdir="$1/comments"
+	mkdir -p "$cdir"
+	n=$(ls "$cdir" | wc -l | tr -d ' ')
+	while :; do
+		n=$((n + 1))
+		f="$cdir/$(awk -v n="$n" 'BEGIN { printf "%04d", n }')-$(stamp)-$$.md"
+		if (set -C; : >"$f") 2>/dev/null; then break; fi
+	done
+	{
+		printf 'author: %s\n' "$(author)"
+		printf 'time: %s\n' "$(now)"
+		printf 'kind: %s\n' "$2"
+		[ -n "${4:-}" ] && printf 'posted-by: %s\n' "$4"
+		printf '%s\n' '---'
+		cat "$3"
+	} >"$f"
+	kv_set "$1/meta" updated "$(now)"
+}
+
+event() { # dir message
+	t="$1/.event.$$"
+	printf '%s\n' "$2" >"$t"
+	add_comment "$1" event "$t"
+	rm -f "$t"
+}
+
+# Parse the common trailing options; sets MODE/VAL/AS/VERBATIM/POSTED_BY/REST.
+parse_opts() {
+	MODE='' VAL='' AS='' VERBATIM='' POSTED_BY='' REST=''
+	while [ $# -gt 0 ]; do
+		case "$1" in
+		-m) [ $# -ge 2 ] || die "-m needs a value"; MODE=m VAL=$2; shift 2 ;;
+		-f) [ $# -ge 2 ] || die "-f needs a value"; MODE=f VAL=$2; shift 2 ;;
+		--as) [ $# -ge 2 ] || die "--as needs a value"; AS=$2; shift 2 ;;
+		--verbatim) VERBATIM=1; shift ;;
+		--posted-by) [ $# -ge 2 ] || die "--posted-by needs a value"; POSTED_BY=$2; shift 2 ;;
+		*) REST="$REST $1"; shift ;;
+		esac
+	done
+}
+
+# --- commands -----------------------------------------------------------------
+
+cmd_init() {
+	if top=$(git rev-parse --show-toplevel 2>/dev/null); then base=$top; else base=$(pwd); fi
+	root="$base/.conductor"
+	mkdir -p "$root/issues" "$root/runs" "$root/loops"
+	[ -f "$root/config" ] || kv_set "$root/config" created "$(now)"
+	if git -C "$base" rev-parse --git-dir >/dev/null 2>&1; then
+		ex=$(git -C "$base" rev-parse --git-path info/exclude)
+		case "$ex" in /*) ;; *) ex="$base/$ex" ;; esac
+		mkdir -p "$(dirname "$ex")"
+		touch "$ex"
+		grep -qx '.conductor/' "$ex" || printf '.conductor/\n' >>"$ex"
+	fi
+	printf '%s\n' "$root"
+}
+
+cmd_config() {
+	root=$(find_root)
+	case "${1:-}" in
+	'') cat "$root/config" ;;
+	get) [ $# -eq 2 ] || die "usage: config get KEY"; kv_get "$root/config" "$2" ;;
+	set) [ $# -eq 3 ] || die "usage: config set KEY VALUE"; kv_set "$root/config" "$2" "$3" ;;
+	*) die "usage: config [get KEY | set KEY VALUE]" ;;
+	esac
+}
+
+cmd_new() {
+	root=$(find_root)
+	title='' risk='' labels=''
+	MODE='' VAL=''
+	while [ $# -gt 0 ]; do
+		case "$1" in
+		-t) [ $# -ge 2 ] || die "-t needs a value"; title=$2; shift 2 ;;
+		-r) [ $# -ge 2 ] || die "-r needs a value"; risk=$2; shift 2 ;;
+		-l) [ $# -ge 2 ] || die "-l needs a value"; labels="${labels:+$labels,}$2"; shift 2 ;;
+		-m) [ $# -ge 2 ] || die "-m needs a value"; MODE=m VAL=$2; shift 2 ;;
+		-f) [ $# -ge 2 ] || die "-f needs a value"; MODE=f VAL=$2; shift 2 ;;
+		--as) [ $# -ge 2 ] || die "--as needs a value"; AS=$2; shift 2 ;;
+		*) die "unknown option for new: $1" ;;
+		esac
+	done
+	[ -n "$title" ] || die "new needs -t TITLE"
+	[ -z "$risk" ] || in_list "$risk" "$RISKS" || die "risk must be one of: $RISKS"
+	body=$(read_text "$MODE" "$VAL")
+	last=$(ls "$root/issues" | sort | tail -n 1)
+	n=$(awk -v n="${last:-0}" 'BEGIN { print n + 0 }')
+	while :; do
+		n=$((n + 1))
+		id=$(awk -v n="$n" 'BEGIN { printf "%04d", n }')
+		mkdir "$root/issues/$id" 2>/dev/null && break
+	done
+	dir="$root/issues/$id"
+	ts=$(now)
+	{
+		printf 'id: %s\n' "$id"
+		printf 'title: %s\n' "$(printf '%s' "$title" | tr '\n\r' '  ')"
+		printf 'status: open\n'
+		printf 'risk: %s\n' "${risk:-unset}"
+		printf 'labels: %s\n' "$labels"
+		printf 'author: %s\n' "$(author)"
+		printf 'created: %s\n' "$ts"
+		printf 'updated: %s\n' "$ts"
+	} >"$dir/meta"
+	printf '%s\n' "$body" >"$dir/body.md"
+	printf '%s\n' "$id"
+}
+
+cmd_list() {
+	root=$(find_root)
+	all='' want=''
+	while [ $# -gt 0 ]; do
+		case "$1" in
+		--all) all=1; shift ;;
+		--status) [ $# -ge 2 ] || die "--status needs a value"; want=$2; shift 2 ;;
+		*) die "unknown option for list: $1" ;;
+		esac
+	done
+	found=''
+	for dir in "$root"/issues/*; do
+		[ -f "$dir/meta" ] || continue
+		st=$(kv_get "$dir/meta" status)
+		if [ -n "$want" ]; then [ "$st" = "$want" ] || continue
+		elif [ -z "$all" ]; then case "$st" in done | closed) continue ;; esac
+		fi
+		nc=0
+		[ -d "$dir/comments" ] && nc=$(ls "$dir/comments" | wc -l | tr -d ' ')
+		lb=$(kv_get "$dir/meta" labels)
+		printf '#%s  %-11s  risk:%-5s  %s  %s%s  (%s comments)\n' \
+			"$(kv_get "$dir/meta" id)" "$st" "$(kv_get "$dir/meta" risk)" \
+			"$(kv_get "$dir/meta" updated)" "$(kv_get "$dir/meta" title)" \
+			"${lb:+  [$lb]}" "$nc"
+		found=1
+	done
+	[ -n "$found" ] || printf '(no tasks)\n'
+}
+
+cmd_show() {
+	root=$(find_root)
+	[ $# -ge 1 ] || die "usage: show ID [--last N | --all]"
+	dir=$(issue_dir "$root" "$1")
+	shift
+	last=5
+	while [ $# -gt 0 ]; do
+		case "$1" in
+		--last) [ $# -ge 2 ] || die "--last needs a value"; last=$2; shift 2 ;;
+		--all) last=all; shift ;;
+		*) die "unknown option for show: $1" ;;
+		esac
+	done
+	cat "$dir/meta"
+	printf '\n== body ==\n'
+	cat "$dir/body.md"
+	total=0
+	[ -d "$dir/comments" ] && total=$(ls "$dir/comments" | wc -l | tr -d ' ')
+	if [ "$last" = all ]; then skip=0; else
+		case "$last" in '' | *[!0-9]*) die "--last needs a number" ;; esac
+		skip=$((total - last))
+		[ "$skip" -lt 0 ] && skip=0
+	fi
+	printf '\n== comments (%s total, showing %s) ==\n' "$total" "$((total - skip))"
+	i=0
+	for f in "$dir"/comments/*; do
+		[ -f "$f" ] || continue
+		i=$((i + 1))
+		[ "$i" -le "$skip" ] && continue
+		printf '\n'
+		cat "$f"
+	done
+}
+
+cmd_comment() {
+	root=$(find_root)
+	[ $# -ge 1 ] || die "usage: comment ID (-m TEXT | -f FILE) [--as AUTHOR]"
+	dir=$(issue_dir "$root" "$1")
+	shift
+	parse_opts "$@"
+	[ -z "$REST" ] || die "unknown arguments:$REST"
+	kind=comment
+	if [ -n "$VERBATIM" ]; then
+		[ -n "$POSTED_BY" ] || die "--verbatim needs --posted-by WHO"
+		kind=verbatim
+	fi
+	t="$dir/.comment.$$"
+	read_text "$MODE" "$VAL" >"$t"
+	add_comment "$dir" "$kind" "$t" "$POSTED_BY"
+	rm -f "$t"
+}
+
+cmd_status() {
+	root=$(find_root)
+	[ $# -ge 2 ] || die "usage: status ID STATUS"
+	dir=$(issue_dir "$root" "$1")
+	new=$2
+	shift 2
+	parse_opts "$@"
+	in_list "$new" "$STATUSES" || die "status must be one of: $STATUSES"
+	old=$(kv_get "$dir/meta" status)
+	kv_set "$dir/meta" status "$new"
+	event "$dir" "status: $old -> $new"
+}
+
+cmd_risk() {
+	root=$(find_root)
+	[ $# -ge 2 ] || die "usage: risk ID low|mid|high"
+	dir=$(issue_dir "$root" "$1")
+	new=$2
+	shift 2
+	parse_opts "$@"
+	in_list "$new" "$RISKS" || die "risk must be one of: $RISKS"
+	old=$(kv_get "$dir/meta" risk)
+	kv_set "$dir/meta" risk "$new"
+	event "$dir" "risk: $old -> $new"
+}
+
+cmd_label() {
+	root=$(find_root)
+	[ $# -ge 2 ] || die "usage: label ID +NAME|-NAME..."
+	dir=$(issue_dir "$root" "$1")
+	shift
+	parse_opts "$@"
+	labels=$(kv_get "$dir/meta" labels)
+	for op in $REST; do
+		name=${op#?}
+		[ -n "$name" ] || die "empty label in: $op"
+		case "$name" in *,* | *' '*) die "label must not contain commas or spaces: $name" ;; esac
+		labels=$(printf '%s\n' "$labels" | tr ',' '\n' | grep -vx -- "$name" | grep -v '^$' | paste -sd, - || true)
+		case "$op" in
+		+*) labels="${labels:+$labels,}$name" ;;
+		-*) ;;
+		*) die "label ops must start with + or -: $op" ;;
+		esac
+	done
+	kv_set "$dir/meta" labels "$labels"
+	event "$dir" "labels:$REST"
+}
+
+cmd_link() {
+	root=$(find_root)
+	[ $# -ge 3 ] || die "usage: link ID KEY VALUE"
+	dir=$(issue_dir "$root" "$1")
+	key=$2 val=$3
+	shift 3
+	parse_opts "$@"
+	case "$key" in '' | *[!A-Za-z0-9_-]*) die "link key must be [A-Za-z0-9_-]: $key" ;; esac
+	kv_set "$dir/meta" "link.$key" "$val"
+	event "$dir" "link.$key: $val"
+}
+
+cmd_body() {
+	root=$(find_root)
+	[ $# -ge 1 ] || die "usage: body ID (-m TEXT | -f FILE)"
+	dir=$(issue_dir "$root" "$1")
+	shift
+	parse_opts "$@"
+	[ -z "$REST" ] || die "unknown arguments:$REST"
+	t="$dir/.body.$$"
+	read_text "$MODE" "$VAL" >"$t"
+	mkdir -p "$dir/history"
+	h="history/body-$(stamp)-$$.md"
+	cp "$dir/body.md" "$dir/$h"
+	mv "$t" "$dir/body.md"
+	event "$dir" "body updated (previous version: $h)"
+}
+
+cmd_rundir() {
+	root=$(find_root)
+	[ $# -eq 1 ] || die "usage: rundir ID"
+	id=$(norm_id "$1")
+	issue_dir "$root" "$id" >/dev/null
+	mkdir -p "$root/runs/$id"
+	printf '%s\n' "$root/runs/$id"
+}
+
+[ $# -ge 1 ] || { usage; exit 1; }
+cmd=$1
+shift
+case "$cmd" in
+init) cmd_init "$@" ;;
+config) cmd_config "$@" ;;
+new) cmd_new "$@" ;;
+list) cmd_list "$@" ;;
+show) cmd_show "$@" ;;
+comment) cmd_comment "$@" ;;
+status) cmd_status "$@" ;;
+risk) cmd_risk "$@" ;;
+label) cmd_label "$@" ;;
+link) cmd_link "$@" ;;
+body) cmd_body "$@" ;;
+rundir) cmd_rundir "$@" ;;
+-h | --help | help) usage ;;
+*) die "unknown command: $cmd (see conductor --help)" ;;
+esac
