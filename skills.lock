@@ -3,14 +3,16 @@ version = 1
 
 [packs]
 [packs.'Maybe404/skilldots']
-commit = '9cb26a215dcc56af545b91c0fbae46d4b5e39fc2'
+commit = '08a277ef7d8f4138e07a727f983b5e4e17cb1f30'
+upstream = ['skilldots']
 
 [packs.'Maybe404/skilldots'.skills]
 [packs.'Maybe404/skilldots'.skills.skilldots]
-hash = '0d43810f26478db3'
+hash = '5bf0f86607aa1ca6'
 
 [packs.'Maybe404/ui-arsenal']
 commit = '830a9fb1d4692ac25820629de70098dafcc60b14'
+upstream = ['ui-arsenal']
 
 [packs.'Maybe404/ui-arsenal'.skills]
 [packs.'Maybe404/ui-arsenal'.skills.ui-arsenal]
@@ -18,6 +20,7 @@ hash = '9e7aa891ce2f7cec'
 
 [packs.'kepano/obsidian-skills']
 commit = '3ccff5338ea700537839b21900aa5358a0402c98'
+upstream = ['defuddle', 'json-canvas', 'knap', 'obsidian-bases', 'obsidian-cli', 'obsidian-markdown']
 
 [packs.'kepano/obsidian-skills'.skills]
 [packs.'kepano/obsidian-skills'.skills.defuddle]
@@ -60,38 +63,45 @@ hash = '0f67128d20e972d8'
 hash = '42b33625cba4cc29'
 
 [packs.'pbakaus/impeccable']
-commit = '5bf0a069dc857e1b5f4b090e004d9d5b231416ca'
+commit = '2fd24e3a9887e9fc009408ffbbb486e74998694e'
+upstream = ['impeccable']
 
 [packs.'pbakaus/impeccable'.skills]
 [packs.'pbakaus/impeccable'.skills.impeccable]
-hash = 'bbabbe412ea172cb'
+hash = 'f37182c66420b73e'
 
 [packs.'stablyai/orca']
-commit = 'a49295f0240353a4e56a292961a846b4d1eb24e0'
+commit = '57f1fce9bb338ccaf45de5333a59e10999abf0b7'
+upstream = ['computer-use', 'jira-tickets', 'linear-tickets', 'orca-chat-visuals', 'orca-cli', 'orca-emulator', 'orca-emulator-android', 'orca-jira', 'orca-linear', 'orca-per-workspace-env', 'orchestration']
 
 [packs.'stablyai/orca'.skills]
 [packs.'stablyai/orca'.skills.orchestration]
 hash = '6e15b4ea69497f6b'
 
 [packs.'trailofbits/skills']
-commit = '5c99c03fb8a9ea568432ecbcba5d86e9f4ac2bf0'
+commit = 'f0dd11d2b1da17a1ff8c403741fbe1f6bca0f871'
+upstream = ['address-sanitizer', 'adjudicate-regression', 'aflpp', 'agentic-actions-auditor', 'algorand-vulnerability-scanner', 'atheris', 'audit-augmentation', 'audit-context-building', 'audit-prep-assistant', 'burpsuite-project-parser', 'c-review', 'cairo-vulnerability-scanner', 'cargo-fuzz', 'chrome-mcp-troubleshooting', 'code-improver', 'code-maturity-assessor', 'codeql', 'constant-time-analysis', 'constant-time-testing', 'cosmos-vulnerability-scanner', 'coverage-analysis', 'crypto-protocol-diagram', 'devcontainer-setup', 'diagramming-code', 'differential-review', 'dimensional-analysis', 'dwarf-expert', 'entry-point-analyzer', 'firebase-apk-scanner', 'fp-check', 'fuzzing-dictionary', 'fuzzing-obstacles', 'genotoxic', 'gh-cli', 'github-triage', 'goal-prompt', 'graph-evolution', 'guidelines-advisor', 'harness-writing', 'hunt-regressions', 'implement-patch', 'interpreting-culture-index', 'let-fate-decide', 'libafl', 'libfuzzer', 'mermaid-to-proverif', 'modern-cpp', 'modern-python', 'mutation-testing', 'open-sourcing', 'ossfuzz', 'patching-bugs', 'post-patch-validation', 'pr-improver', 'prepare-regression', 'property-based-testing', 'prove-patch', 'regression-hunt', 'replay-regression', 'report-regressions', 'reproduce-bug', 'reproduce-regression', 'review-walkthrough', 'rust-review', 'ruzzy', 'sarif-parsing', 'second-opinion', 'secure-workflow-guide', 'semgrep', 'semgrep-rule-creator', 'semgrep-rule-variant-creator', 'sharp-edges', 'skill-improver', 'slicing-code-context', 'solana-vulnerability-scanner', 'spec-to-code-compliance', 'substrate-vulnerability-scanner', 'supply-chain-risk-auditor', 'testing-handbook-generator', 'token-integration-analyzer', 'ton-vulnerability-scanner', 'trailmark', 'trailmark-finding-triage', 'trailmark-review-gate', 'trailmark-structural', 'trailmark-summary', 'trailmark-variant-neighborhood', 'validate-bug', 'variant-analysis', 'vector-forge', 'vulnerability-triage-brocards', 'writing-lean-proofs', 'wycheproof', 'yara-rule-authoring', 'zeroize-audit']
 
 [packs.'trailofbits/skills'.skills]
 [packs.'trailofbits/skills'.skills.differential-review]
+category = 'differential-review'
 hash = '965e48b69aad8c4e'
 
 [packs.'trailofbits/skills'.skills.modern-python]
+category = 'modern-python'
 hash = '7288a34e65b207eb'
 
 [packs.'vercel-labs/agent-skills']
 commit = '063bee94c3f4df8453406c830b0a7df0f2860278'
+upstream = ['deploy-to-vercel', 'vercel-cli-with-tokens', 'vercel-composition-patterns', 'vercel-optimize', 'vercel-react-best-practices', 'vercel-react-native-skills', 'vercel-react-view-transitions', 'web-design-guidelines', 'writing-guidelines']
 
 [packs.'vercel-labs/agent-skills'.skills]
 [packs.'vercel-labs/agent-skills'.skills.vercel-react-best-practices]
 hash = 'e3f2294574b469c7'
 
 [packs.'vercel-labs/skills']
-commit = '13e4063a1cf913f5606d57d42ab83a86f5001e04'
+commit = 'a80e4c9d12d607631249d4d7d059f835d4b2f13a'
+upstream = ['find-skills']
 
 [packs.'vercel-labs/skills'.skills]
 [packs.'vercel-labs/skills'.skills.find-skills]
@@ -113,7 +123,8 @@ source = 'vendor/kepano/obsidian-skills/defuddle'
 
 [links.'agents/differential-review']
 mode = 'link'
-source = 'vendor/trailofbits/skills/differential-review'
+source = 'vendor/trailofbits/skills/differential-review/differential-review'
+path = '/Users/maybe/.agents/skills/differential-review'
 
 [links.'agents/find-skills']
 mode = 'link'
@@ -167,7 +178,8 @@ path = '/Users/maybe/.agents/skills/lark-wiki'
 
 [links.'agents/modern-python']
 mode = 'link'
-source = 'vendor/trailofbits/skills/modern-python'
+source = 'vendor/trailofbits/skills/modern-python/modern-python'
+path = '/Users/maybe/.agents/skills/modern-python'
 
 [links.'agents/obsidian-bases']
 mode = 'link'
@@ -220,7 +232,8 @@ source = 'vendor/kepano/obsidian-skills/defuddle'
 
 [links.'claude/differential-review']
 mode = 'link'
-source = 'vendor/trailofbits/skills/differential-review'
+source = 'vendor/trailofbits/skills/differential-review/differential-review'
+path = '/Users/maybe/.claude/skills/differential-review'
 
 [links.'claude/find-skills']
 mode = 'link'
@@ -274,7 +287,8 @@ path = '/Users/maybe/.claude/skills/lark-wiki'
 
 [links.'claude/modern-python']
 mode = 'link'
-source = 'vendor/trailofbits/skills/modern-python'
+source = 'vendor/trailofbits/skills/modern-python/modern-python'
+path = '/Users/maybe/.claude/skills/modern-python'
 
 [links.'claude/obsidian-bases']
 mode = 'link'
@@ -312,47 +326,3 @@ source = 'vendor/Maybe404/ui-arsenal/ui-arsenal'
 [links.'claude/vercel-react-best-practices']
 mode = 'link'
 source = 'vendor/vercel-labs/agent-skills/vercel-react-best-practices'
-
-[links.'codex/curated-ui']
-mode = 'link'
-source = 'skills/curated-ui'
-
-[links.'codex/differential-review']
-mode = 'link'
-source = 'vendor/trailofbits/skills/differential-review'
-
-[links.'codex/idea-config-maintainer']
-mode = 'link'
-source = 'private/idea-config-maintainer'
-
-[links.'codex/impeccable']
-mode = 'link'
-source = 'vendor/pbakaus/impeccable/impeccable'
-
-[links.'codex/modern-python']
-mode = 'link'
-source = 'vendor/trailofbits/skills/modern-python'
-
-[links.'codex/ui-arsenal']
-mode = 'link'
-source = 'vendor/Maybe404/ui-arsenal/ui-arsenal'
-
-[links.'codex/vercel-react-best-practices']
-mode = 'link'
-source = 'vendor/vercel-labs/agent-skills/vercel-react-best-practices'
-
-[links.'gemini/differential-review']
-mode = 'link'
-source = 'vendor/trailofbits/skills/differential-review'
-
-[links.'gemini/impeccable']
-mode = 'link'
-source = 'vendor/pbakaus/impeccable/impeccable'
-
-[links.'gemini/modern-python']
-mode = 'link'
-source = 'vendor/trailofbits/skills/modern-python'
-
-[links.'grok/orchestration']
-mode = 'link'
-source = 'vendor/stablyai/orca/orchestration'

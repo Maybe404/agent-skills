@@ -80,7 +80,3 @@ targets = ['agents', 'claude']
 [[local]]
 name = 'idea-config-maintainer'
 targets = ['agents', 'claude', 'codex']
-
-[[local]]
-name = 'test'
-targets = []
